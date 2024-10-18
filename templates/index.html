@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo III Leaderboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <h1>Diablo III Leaderboard</h1>
+
+    <!-- Button to Navigate to Classes Explorer -->
+    <div class="section">
+        <button onclick="window.location.href='/classes'">Explore Diablo III Classes</button>
+        <button onclick="window.location.href='/most_used'">Most Used Infos</button>
+
+    </div>
+
+    <!-- Class Image -->
+    <div>
+        <img id="classImage" class="class-image"
+            src="https://dvnv93bpfr08y.cloudfront.net/original/1X/21c1659096b0e44c76cdb7e17c859bf52dc8667d.png"
+            alt="All Classes">
+    </div>
+
+    <div class="section">
+        <!-- Game Info Section -->
+        <div class="game-info-section">
+            <!-- Acts Dropdown and Quests Display -->
+            <div class="section">
+                <h2>Select Act:</h2>
+                <select id="actsDropdown" onchange="fetchQuestsForAct()">
+                    <!-- Acts options will be dynamically populated here -->
+                </select>
+
+                <h3>Quests</h3>
+                <ul id="questsList">
+                    <!-- Quests for the selected act will be displayed here -->
+                </ul>
+            </div>
+
+            <!-- Artisan Tier Dropdown and Recipe Display -->
+            <div class="section">
+                <h2>Select Artisan Tier</h2>
+                <select id="artisanTierDropdown">
+                    <!-- Artisan tiers will be dynamically populated here -->
+                </select>
+
+                <h3>Taught Recipes</h3>
+                <ul id="taughtRecipesList">
+                    <!-- Taught recipes for the selected tier will be displayed here -->
+                </ul>
+
+                <h3>Trained Recipes</h3>
+                <ul id="trainedRecipesList">
+                    <!-- Trained recipes for the selected tier will be displayed here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Leaderboard</h2>
+
+    <!-- Dropdown for Seasons -->
+    <label for="season">Season:</label>
+    <select id="season" onchange="fetchLeaderboard()">
+        <!-- Seasons will be populated here dynamically -->
+    </select>
+
+    <!-- Season Dates -->
+    <div class="season-dates" id="seasonDates"></div>
+
+    <!-- Class Selection -->
+    <label for="class">Class:</label>
+    <select id="class" onchange="updateClassImage(); fetchLeaderboard();">
+        <option value="all">All Classes</option>
+        <option value="rift-barbarian">Barbarian</option>
+        <option value="rift-wizard">Wizard</option>
+        <option value="rift-dh">Demon Hunter</option>
+        <option value="rift-monk">Monk</option>
+        <option value="rift-necromancer">Necromancer</option>
+        <option value="rift-wd">Witch Doctor</option>
+        <option value="rift-crusader">Crusader</option>
+    </select>
+
+    <!-- Search Player -->
+    <label for="playerSearch">Search Player:</label>
+    <input type="text" id="playerSearch" placeholder="Enter BattleTag">
+    <button onclick="searchPlayer()">Search</button>
+
+    <div id="leaderboardData" class="data-container">
+        <table id="leaderboardTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>BattleTag</th>
+                    <th>Rift Level</th>
+                    <th>Rift Time</th>
+                    <th>Completed Time</th>
+                    <th>Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Leaderboard data will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <div id="loader" class="loader" style="display: none;"></div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <button id="prevPage" onclick="changePage(-1)" disabled>Previous</button>
+        <span id="pageIndicator">Page 1</span>
+        <button id="nextPage" onclick="changePage(1)">Next</button>
+    </div>
+    <div id="heroDetails" style="margin-top: 20px;"></div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>
+        // Call the fetchActs function on page load
+        window.onload = fetchActs;
+
+        // Call the fetchArtisan function on page load (with artisanSlug = "blacksmith")
+        window.onload = function () {
+            fetchArtisan('blacksmith');  // Fetch recipes for the blacksmith artisan on load
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchActs(); // Load acts and quests
+            fetchArtisan('blacksmith'); // Load artisan tiers and recipes for 'blacksmith'
+        });
+    </script>
+</body>
+
+</html>

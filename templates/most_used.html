@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Used Items</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            color: #f5a623;
+        }
+
+        label {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        select {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .item-card {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            width: calc(33% - 20px);
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
+        .item-card h3 {
+            color: #f5a623;
+            margin-bottom: 10px;
+        }
+
+        .item-card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .item-card li {
+            margin-bottom: 5px;
+        }
+
+        .primary-attributes {
+            color: #69ff69; /* Light green for primary */
+        }
+
+        .secondary-attributes {
+            color: #ff6969; /* Light red for secondary */
+        }
+
+        .gems-section {
+            color: #6699ff; /* Light blue for gems */
+        }
+
+        .flavor-text {
+            font-style: italic;
+            color: #999;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #f5a623;
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .item-card {
+                width: calc(50% - 20px); /* Two items per row for smaller screens */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .item-card {
+                width: 100%; /* Full width on small screens */
+            }
+        }
+
+        /* Back button styling */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f5a623;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #e5941c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Most Used Items in Diablo III Leaderboards</h1>
+
+        <label for="class">Select Class:</label>
+        <select id="class" onchange="fetchMostUsedItems()">
+            <option value="rift-monk">Monk</option>
+            <option value="rift-barbarian">Barbarian</option>
+            <option value="rift-wizard">Wizard</option>
+            <option value="rift-dh">Demon Hunter</option>
+            <option value="rift-necromancer">Necromancer</option>
+            <option value="rift-wd">Witch Doctor</option>
+            <option value="rift-crusader">Crusader</option>
+        </select>
+
+        <label for="season">Select Season:</label>
+        <select id="season" onchange="fetchMostUsedItems()">
+            <!-- Populated dynamically -->
+        </select>
+
+        <a href="../" class="back-button">Back to Character</a>
+        <h2>Most Used Items</h2>
+        <div id="loader" class="loader"></div>
+
+        <div id="mostUsedItems" class="items-container">
+
+            <!-- Most used items will be displayed here -->
+        </div>
+
+
+        <!-- Most Used Items Section -->
+    </div>
+
+    <script>
+        // Function to fetch most used items based on the class and season selected
+        async function fetchMostUsedItems() {
+            const classSlug = document.getElementById('class').value;
+            const season = document.getElementById('season').value;
+            showLoader();  // Show loader when fetching
+
+            try {
+                const response = await fetch(`/api/most_used_items?season_id=${season}&class_slug=${classSlug}`);
+                if (!response.ok) {
+                    console.error('Error fetching most used items:', response.statusText);
+                    return;
+                }
+
+                const data = await response.json();
+                displayMostUsedItems(data);
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                hideLoader();  // Hide loader after fetching
+            }
+        }
+
+        function displayMostUsedItems(itemsData) {
+            const mostUsedItemsDiv = document.getElementById('mostUsedItems');
+            mostUsedItemsDiv.innerHTML = '';  // Reset content
+
+            if (Object.keys(itemsData).length === 0) {
+                mostUsedItemsDiv.innerHTML = '<p>No items data found for the selected class and season.</p>';
+                return;
+            }
+
+            for (const slot in itemsData) {
+                if (itemsData.hasOwnProperty(slot)) {
+                    const itemData = itemsData[slot].item;
+                    const count = itemsData[slot].count;
+
+                    const primaryAttributes = itemData.attributes.primary || [];
+                    const secondaryAttributes = itemData.attributes.secondary || [];
+                    const gems = itemData.gems || [];
+
+                    const itemCard = document.createElement('div');
+                    itemCard.classList.add('item-card');
+
+                    const primaryAttrHTML = primaryAttributes.map(attr => `<li>${attr}</li>`).join('');
+                    const secondaryAttrHTML = secondaryAttributes.map(attr => `<li>${attr}</li>`).join('');
+                    const gemsHTML = gems.map(gem => `<li>${gem.item.name}: ${gem.attributes.join(', ')}</li>`).join('');
+
+                    itemCard.innerHTML = `
+                        <h3>${itemData.name}</h3>
+                        <ul>
+                            <li><strong>Slot:</strong> ${slot}</li>
+                            <li><strong>Usage Count:</strong> Used ${count} times</li>
+                            <li><strong>Armor:</strong> ${itemData.armor || "N/A"}</li>
+                            <li><strong>Augmentation:</strong> ${itemData.augmentation || "N/A"}</li>
+                        </ul>
+                        <h4>Primary Attributes</h4>
+                        <div class="primary-attributes"><ul>${primaryAttrHTML}</ul></div>
+                        <h4>Secondary Attributes</h4>
+                        <div class="secondary-attributes"><ul>${secondaryAttrHTML}</ul></div>
+                        <h4>Gems</h4>
+                        <div class="gems-section"><ul>${gemsHTML}</ul></div>
+                        <p class="flavor-text"><strong>Flavor Text:</strong> ${itemData.flavorText || "N/A"}</p>
+                    `;
+
+                    mostUsedItemsDiv.appendChild(itemCard);
+                }
+            }
+        }
+
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        window.onload = async function () {
+            try {
+                const response = await fetch('/api/seasons');
+                const data = await response.json();
+                const seasonDropdown = document.getElementById('season');
+
+                data.season.forEach((season, index) => {
+                    const option = document.createElement('option');
+                    option.value = index + 1;
+                    option.textContent = `Season ${index + 1}`;
+                    seasonDropdown.appendChild(option);
+                });
+
+                seasonDropdown.value = data.season.length;  // Set to the latest season
+                fetchMostUsedItems();  // Fetch data for the default values
+            } catch (error) {
+                console.error('Error fetching seasons:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #f5a623;
+}
+
+.section {
+    margin: 20px;
+}
+
+.section input,
+.section select,
+.section button {
+    padding: 10px;
+    margin: 5px;
+}
+
+.data-container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 8px;
+    max-width: 90%;
+    overflow-x: auto;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #444;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #555;
+}
+
+table th {
+    background-color: #555;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+table td {
+    background-color: #333;
+}
+
+.class-image {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.season-dates {
+    color: #f5a623;
+    margin: 10px 0;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #777;
+}
+
+/* Loader Styles */
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Account Profile Styles */
+.account-profile {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account-profile h2 {
+    color: #f5a623;
+}
+
+.account-profile p {
+    margin: 5px 0;
+    text-align: left;
+}
+
+/* Achievements Section Styles */
+.achievements {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.achievements h2 {
+    color: #f5a623;
+}
+
+.achievements ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.achievements li {
+    background-color: #555;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Hero Details Styles */
+.hero-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero-card {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.hero-card h2 {
+    color: #f5a623;
+}
+
+.hero-card p {
+    margin: 5px 0;
+}
+
+/* Back Button Styles */
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f5a623;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .hero-card {
+        width: 100%;
+    }
+
+    .account-profile,
+    .achievements {
+        width: 90%;
+    }
+}
+
+
+.game-info-section {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: white;
+    display: flex;
+    justify-content: center
+}
+
+.game-info-section h2 {
+    color: #f5a623;
+}
+
+.game-info-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-info-section li {
+    margin-bottom: 10px;
+}
+
+#artisanInfo {
+    margin-top: 10px;
+}
+
+
+
+
+/* Loader Styles */
+#loader {
+    display: none;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #f5a623;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Container for Items */
+.items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Item Card Styles */
+.item-card {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+}
+
+.item-card h3 {
+    color: #f5a623;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.item-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.item-card li {
+    margin-bottom: 5px;
+    line-height: 1.5em;
+}
+
+/* Attribute Styles */
+.item-card h4 {
+    font-size: 1.2em;
+    color: #f5a623;
+    margin-top: 10px;
+}
+
+.item-card .primary-attributes,
+.item-card .secondary-attributes,
+.item-card .gems {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Flavor Text */
+.item-card p {
+    font-style: italic;
+    color: #f5a623;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .item-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .item-card {
+        width: 90%;
+    }
+}
+
+
+/* Loader Styles */
+#loader {
+    display: none;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #f5a623;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Container for Items */
+.items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Item Card Styles */
+.item-card {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+}
+
+.item-card h3 {
+    color: #f5a623;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.item-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.item-card li {
+    margin-bottom: 5px;
+    line-height: 1.5em;
+}
+
+/* Attribute Styles */
+.item-card h4 {
+    font-size: 1.2em;
+    color: #f5a623;
+    margin-top: 10px;
+}
+
+.item-card .primary-attributes,
+.item-card .secondary-attributes,
+.item-card .gems {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Flavor Text */
+.item-card p {
+    font-style: italic;
+    color: #f5a623;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .item-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .item-card {
+        width: 90%;
+    }
+}

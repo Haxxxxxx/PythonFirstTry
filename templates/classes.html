@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo III Data Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <h1>Diablo III Classes Explorer</h1>
+
+    <!-- Hero Class Selection Section -->
+    <div class="section">
+        <h2>Select Hero Class</h2>
+        <select id="heroClassDropdown" onchange="fetchHeroSkills()">
+            <option value="">Select a Class</option>
+            <option value="barbarian">Barbarian</option>
+            <option value="wizard">Wizard</option>
+            <option value="demon-hunter">Demon Hunter</option>
+            <option value="monk">Monk</option>
+            <option value="necromancer">Necromancer</option>
+            <option value="witch-doctor">Witch Doctor</option>
+            <option value="crusader">Crusader</option>
+        </select>
+
+        <h3>Hero Class Details</h3>
+        <div id="heroClassDetails"></div>
+    </div>
+
+    <!-- Hero Active Skills Section -->
+    <div class="section">
+        <h2>Select Active Skill for Hero Class</h2>
+        <select id="heroActiveSkillDropdown" onchange="fetchHeroSkillDetails('active')">
+            <option value="">Select an Active Skill</option>
+        </select>
+
+        <h3>Active Skill Details</h3>
+        <div id="heroActiveSkillDetails"></div>
+    </div>
+
+    <!-- Hero Passive Skills Section -->
+    <div class="section">
+        <h2>Select Passive Skill for Hero Class</h2>
+        <select id="heroPassiveSkillDropdown" onchange="fetchHeroSkillDetails('passive')">
+            <option value="">Select a Passive Skill</option>
+        </select>
+
+        <h3>Passive Skill Details</h3>
+        <div id="heroPassiveSkillDetails"></div>
+    </div>
+    <div class="section">
+        <h2>Available Item Types</h2>
+        <select id="itemTypesDropdown" onchange="fetchItemTypeDetails()">
+            <option value="">Select an Item Type</option>
+        </select>
+
+        <h3>Item Type Details</h3>
+        <div id="itemTypeDetails"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+</body>
+
+</html>

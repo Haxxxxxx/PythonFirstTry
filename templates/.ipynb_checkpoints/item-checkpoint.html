@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Items - Hero ID {{ hero_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .item-card {
+            background-color: #2a2a2a;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            width: calc(33% - 20px); /* Responsive sizing for 3 items per row */
+            box-sizing: border-box;
+        }
+
+        .item-card img {
+            max-width: 100px;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        .item-card h3 {
+            color: #f5a623;
+            margin-bottom: 10px;
+        }
+
+        .item-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .item-details li {
+            margin-bottom: 5px;
+        }
+
+        .primary-attributes {
+            color: #69ff69; /* Light green for primary */
+        }
+
+        .secondary-attributes {
+            color: #ff6969; /* Light red for secondary */
+        }
+
+        .special-effect {
+            color: #ffcc00; /* Yellow for special effects */
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .gems-section {
+            color: #6699ff; /* Light blue for gems */
+        }
+
+        .flavor-text {
+            font-style: italic;
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .item-card {
+                width: calc(50% - 20px); /* Two items per row for smaller screens */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .item-card {
+                width: 100%; /* Full width on small screens */
+            }
+        }
+
+        /* Back button styling */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f5a623;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #e5941c;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Items for Hero ID: {{ hero_id }}</h1>
+
+<div class="items-container">
+    {% for slot, item in items.items() %}
+    <div class="item-card">
+        <img src="https://example.com/path/to/images/{{ item.icon }}.png" alt="{{ item.name }}"> <!-- Image of the item -->
+        <h3>{{ item.name }}</h3>
+        <ul>
+            <li><strong>Item Type:</strong> {{ item.typeName }}</li>
+            <li><strong>Item Level:</strong> {{ item.itemLevel or 'N/A' }}</li>
+            <li><strong>Damage:</strong> {{ item.damage or 'N/A' }}</li>
+            <li><strong>Armor:</strong> {{ item.armor or 'N/A' }}</li>
+            <li><strong>DPS:</strong> {{ item.dps or 'N/A' }}</li>
+            <li><strong>Required Level:</strong> {{ item.requiredLevel or 'N/A' }}</li>
+
+            <!-- Primary Attributes -->
+            <li class="primary-attributes"><strong>Primary Attributes:</strong>
+                <ul>
+                    {% for attribute in item.attributes.primary %}
+                    <li>{{ attribute }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <!-- Secondary Attributes -->
+            <li class="secondary-attributes"><strong>Secondary Attributes:</strong>
+                <ul>
+                    {% for attribute in item.attributes.secondary %}
+                    <li>{{ attribute }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <!-- Special Effects (if any) -->
+            {% if item.augmentation %}
+            <li class="special-effect">Special Effect: {{ item.augmentation }}</li>
+            {% endif %}
+
+            {% if item.flavorText %}
+            <li class="flavor-text">{{ item.flavorText }}</li>
+            {% endif %}
+
+            <!-- Gem Information (if any) -->
+            {% if item.gems %}
+            <li class="gems-section"><strong>Gems:</strong>
+                <ul>
+                    {% for gem in item.gems %}
+                    <li>{{ gem.item.name }}: {{ gem.attributes[0] }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% else %}
+    <div>No items available for this hero.</div>
+    {% endfor %}
+</div>
+
+<a href="../../../{{ account }}" class="back-button">Back to Character</a>
+
+</body>
+</html>

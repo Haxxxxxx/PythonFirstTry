@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Details - {{ account }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <h1>Character Details for {{ account }}</h1>
+
+    <!-- Loader -->
+    <div id="profileLoader" class="loader"></div>
+
+    <!-- Account Profile Container -->
+    <div id="accountProfile" class="account-profile">
+        <!-- The content will be populated via JavaScript -->
+    </div>
+
+    <!-- Hero Details Container -->
+    <div id="heroDetails" class="hero-container">
+    </div>
+
+    <a href="../" class="back-button">Back to Character</a>
+
+    <!-- Fetch account data and populate the page -->
+    <script>
+        const account = "{{ account }}"; // Pass the account from Flask template
+        fetchCharacterDetails(account);  // Fetch the character details for the account
+    </script>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+</body>
+
+</html>
