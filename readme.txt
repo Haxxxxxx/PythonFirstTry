@@ -50,3 +50,8 @@ API Must Be Running: The notebook depends on the Flask API. Ensure it's running 
 Keep Credentials Secure: Do not share your .env file or Blizzard API credentials.
 Dependencies: If you add new libraries, update your dependencies accordingly.
    
+
+Link to the Fullstack app : https://github.com/Haxxxxxx/PythonFirstTry
+
+https://github.com/Haxxxxxx/PythonFirstTry.git
+gh repo clone Haxxxxxx/PythonFirstTry
